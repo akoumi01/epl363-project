@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="jumbotron">
+        <h1>Open sTeam Collaboration platform</h1>
+        <p>
+            The sTeam Collaboration platform is.......
+        </p>
+        <a href="" class="btn btn-primary btn-info btn-lg" data-toggle="modal" data-target="#signUp" ><span class="glyphicon glyphicon-search"></span> Sing Up</a>
+    </div>
+    <div class="modal fade" id="signIn">
+        <div class="modal-dialog " >
+            <div class="modal-content panel-primary ">
+                <div class="modal-header panel-heading" >
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title">Sign In</h3>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <h4><label for="userSignIn">Username</label></h4>
+                            <input type="text" class="form-control input-lg" id="userSignIn" size="8" placeholder="Username"required>
+                        </div>
+                        <div class="form-group">
+                            <h4><label for="signInpwd">Password:</label></h4>
+                            <input type="password" class="form-control input-lg" id="signInpwd" size="8" placeholder="Password" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a ng-href="" ng-click="logIn();"class="btn btn-success btn-lg"  > Sign In </a>
+                    <button type="button" class="btn  btn-danger btn-lg" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>	
+        </div>
+    </div>
+    <div class="modal fade" id="signUp">
+        <div class="modal-dialog" >
+            <div class="modal-content panel-primary">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title">Sign Up</h3>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <h4><label for="userSignUp">Username</label></h4>
+                            <input type="text" class="form-control input-lg" id="userSignUp"size="8" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <h4><label for="emailSignUp">Email address:</label></h4>
+                            <input type="emailSignUp" class="form-control input-lg" id="email" placeholder="Email address" required>
+                        </div>
+                        <div class="form-group">
+                            <h4><label for="signUppwd">Password:</label></h4>
+                            <input type="text" class="form-control input-lg" id="signUppwd"size="8" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <h4><label for="signUpRepwd">Reconfirm password:</label></h4>
+                            <input type="text" class="form-control input-lg" id="signUpRepwd" size="8" placeholder="Reconfirm password" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+                    <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

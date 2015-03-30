@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4" >
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><b>Navigation pane</b></h3>
+                </div>
+                <div class="panel-body">    
+                    <div class="list-group">
+                        <a ng-repeat="url in paths" href="#{{url.url}}" class="list-group-item" ng-class="{'list-group-item active': $last}"><b>{{url.name}}</b></a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8" >
+            <div ng-if="Data.object.class == 'Document'">
+                <div ng-if="Data.object.mime_type == 'image/png'">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><h3><b>{{Data.object.name}}</b></h3></h3>
+                        </div> 
+                        <div class="panel-body">
+                            <img src='http://dev-back1.techgrind.asia{{Data.object.path}}'>   
+                        </div>
+                    </div>
+                </div> 
+                <div ng-if="Data.object.mime_type == 'text/plain'">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><h3><b>{{Data.object.name}}</b></h3></h3>
+                        </div>        
+                        <div class="panel-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <h4><label for="name">Documet Name:</label></h4>
+                                    <input type="text" class="form-control input-lg" id="name" value="{{Data.object.name}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <h4><label for="title">Document Title:</label></h4>
+                                    <input type="text" class="form-control input-lg" id="title" value="{{Data.object.title}}" required> 
+                                </div>
+                                <div class="form-group">
+                                    <h4><label for="description">Document description:</label></h4>
+                                    <input type="text" class="form-control input-lg" id="description" value="{{Data.object.description}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <h4><label for="content">Document Content:</label></h4>
+                                    <textarea class="form-control input-lg" rows="5" id="content">{{Data.object.content}}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-lg">Save</button>
+                                </div>
+                            </form>
+                        </div>     
+                    </div>
+                </div>    
+            </div>       
+            <div ng-if="Data.object.class == 'Room'">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>{{Data.object.name}}</b> </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <h1 ng-hide="Data.inventory.length">The Room is empty!!!!</h1><br ng-   hide="Data.inventory.length" >
+                            <a ng-hide="Data.inventory.length" href class="btn btn-success btn-lg"> Add Document to   room</a>
+                            <br ng-hide="Data.inventory.length" ><br ng-hide="Data.inventory.length" ><br ng-hide="Data.inventory.length" >
+                            <table class="table" ng-show="Data.inventory.length">
+                                <thead>
+                                    <tr>
+                                        <th>Picture</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <td></td>
+                                    </tr>   
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="GroupData in Data.inventory">
+                                        <td><img src="http://dev-back1.techgrind.asia{{GroupData.icon.path}}"></td>    
+                                        <td>{{GroupData.name}}</td>
+                                        <td>{{GroupData.description}}</td>
+                                        <td>
+                                            <div ng-if="GroupData.path== ''">    
+                                                <a href=""  class="btn btn-success btn-md">Open</a>
+                                                <a class="btn btn-info btn-md"  data-toggle="modal" data-target=".bs-example-modal-lg" >Rename</a>
+                                            </div>
+                                            <div ng-if="GroupData.path!= ''">    
+                                                <a href="#{{GroupData.path}}"  class="btn btn-success btn-md">Open</a>  <a class="btn btn-info btn-md">Rename</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> 
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button">Add Room</button>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Room name...">
+                        </div>
+                        <form role="form" ng-show="(Data.environment.name!='root-room')">
+                            <div class="row">
+                                <div class="col-md-8" >
+                                    <input type="file"   style="visibility:hidden;"onchange="$('#fileName').val($(this).val());" id="file">
+                                    <div class="input-group">   
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger" type="button" onclick="$('#file').click();">Add File</button>
+                                        </span>
+                                        <input type="text" class="form-control" value="No file selected"id="fileName">                                      </div>
+                                </div> 
+                                <div class="col-md-2" >
+                                    </br>
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-success">Save File</button>
+                                    </div>
+                                </div> 
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </div>
+</div>

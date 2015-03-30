@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>sTeam Collaboration platform</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body ng-app="webPlatformApp">
+    <div class="row" ng-controller="navControler">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">Open sTeam Collaboration platform</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li ng-hide="isLogOut();" ng-class="setClass('/home')">
+                            <a href="#/home"><span class="glyphicon glyphicon-folder-open"> Groups</span></a>
+                        </li>
+                        <li ng-show="isLogOut();" class="active">
+                            <a href="">Home</a>
+                        </li>
+                        <li ng-hide="isLogOut();" ng-class="setClass('/notifications')">
+                            <a href="#/notifications"><span class="glyphicon glyphicon-home" > Home</span></a>
+                        </li>
+                        <li ng-hide="isLogOut();" ng-class="setClass('/messages')">
+                            <a href="#/messages"><span class="glyphicon glyphicon-envelope" > Messaging</span></a>
+                        </li>
+                        <li ng-hide="isLogOut();" ng-class="setClass('/adminPanel')">
+                            <a href="#/adminPanel"><span class="glyphicon glyphicon-list-alt" > Admin Panel</span></a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-hide="isLogOut();" ng-class="setClass('/editProfile')">
+                            <a href="#/editProfile"><span class="glyphicon glyphicon-user" > Edit Profile</span></a>
+                        </li>
+                        <li ng-hide="isLogOut();" ng-class="setClass('/index')">
+                            <a href="#/index"><span class="glyphicon glyphicon-log-in"> Log out</span></a>
+                        </li>
+                        <li ng-show="isLogOut();">
+                            <a href="" data-toggle="modal" data-target="#signUp"><span class="glyphicon glyphicon-user" ></span> Sign Up</a>
+                        </li>
+                        <li ng-show="isLogOut();">
+                            <a href=""data-toggle="modal" data-target="#signIn"><span class="glyphicon glyphicon-log-in" ></span> Log in</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="view-animate-container">
+        <div class="view-animate" ng-view></div>
+    </div>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="webPlatformApp.js"></script>
+</body>
+</html>
