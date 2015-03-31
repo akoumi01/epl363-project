@@ -2,6 +2,10 @@ angular.module('webPlatformApp', ['ngRoute'])
 .config(['$routeProvider', '$locationProvider',
          function ($routeProvider,$locationProvider) {
              $routeProvider
+				.when('/', {
+                    templateUrl: 'views/index.html',
+                    controller: 'IndexCtrl'
+                })
                  .when('/index', {
                     templateUrl: 'views/index.html',
                     controller: 'IndexCtrl'
@@ -38,13 +42,14 @@ angular.module('webPlatformApp', ['ngRoute'])
                     templateUrl: 'views/error.html',
                     controller: 'errorCtrl'
                 })
-                 .otherwise({ redirectTo: '/error' });	  
+                 .otherwise({ redirectTo: '/error' });
          }])
     .controller('IndexCtrl', ['$scope','$location','$route',function ($scope,$route,$location) {
         $scope.logIn=function(){
             $('#signIn').modal('hide');
-            location.reload();         
             location.href = '#/notifications';
+            location.reload();         
+
         }
     }])
     .controller('errorCtrl', ['$scope', function ($scope) {	
@@ -66,6 +71,12 @@ angular.module('webPlatformApp', ['ngRoute'])
         $scope.Url=$scope.WebUrl+$scope.RestQuery+'home/'+$routeParams.paramiters;
     }
     $http.get($scope.Url).success(function(response) {
+        
+        if(response.error!=null){
+        $location.path('/error');
+        $location.replace(); 
+        }else{
+        
         $scope.Data = response;
         if (angular.isArray(response.object)) {
             $scope.objects = response.object;
@@ -98,7 +109,7 @@ angular.module('webPlatformApp', ['ngRoute'])
             $scope.paths=paths;
         }else{
             $scope.paths=[{name:'home',url:'/home/'}];
-        }
+        }}
     }).error(function(data, status, headers, config) {
         $location.path('/error');
         $location.replace(); 
@@ -116,7 +127,8 @@ angular.module('webPlatformApp', ['ngRoute'])
             }
         }
         $scope.isLogOut=function(){
-            if ($location.path().substr(0, $location.path().length) == "/index") {
+            var url=$location.path().substr(0, $location.path().length);
+			if ( url== "/index"||url== "/index.html"||url== "/") {
                 return true; 
             }else return false;
         }    
