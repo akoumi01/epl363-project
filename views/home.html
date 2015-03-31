@@ -63,7 +63,6 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <h1 ng-hide="Data.inventory.length">The Room is empty!!!!</h1><br ng-   hide="Data.inventory.length" >
-                            <a ng-hide="Data.inventory.length" href class="btn btn-success btn-lg"> Add Document to   room</a>
                             <br ng-hide="Data.inventory.length" ><br ng-hide="Data.inventory.length" ><br ng-hide="Data.inventory.length" >
                             <table class="table" ng-show="Data.inventory.length">
                                 <thead>
@@ -81,11 +80,24 @@
                                         <td>{{GroupData.description}}</td>
                                         <td>
                                             <div ng-if="GroupData.path== ''">    
-                                                <a href=""  class="btn btn-success btn-md">Open</a>
-                                                <a class="btn btn-info btn-md"  data-toggle="modal" data-target=".bs-example-modal-lg" >Rename</a>
+                                                <a href=""  class="btn btn-success btn-sm" style="width:90px">Open</a>
+                                                <a class="btn btn-info btn-sm">Rename</a>
                                             </div>
                                             <div ng-if="GroupData.path!= ''">    
-                                                <a href="#{{GroupData.path}}"  class="btn btn-success btn-md">Open</a>  <a class="btn btn-info btn-md">Rename</a>
+                                                <div ng-switch on="GroupData.mime_type">
+                                                    <div ng-switch-when="application/msword">
+                                                        <a href="{{WebUrl}}{{GroupData.path}}"  target="_blank" class="btn btn-success btn-sm" style="width:90px">Download</a>                                                         
+                                                        <a class="btn btn-info btn-sm">Rename</a>
+                                                    </div>
+                                                    <div ng-switch-when="application/pdf">
+                                                         <a href="{{WebUrl}}{{GroupData.path}}"target="_blank" class="btn btn-success btn-sm" style="width:90px">Open</a> 
+                                                        <a class="btn btn-info btn-sm">Rename</a>
+                                                    </div>
+                                                    <div ng-switch-default>
+                                                        <a href="#{{GroupData.path}}"class="btn btn-success btn-sm "    style="width:90px">Open</a>
+                                                        <a class="btn btn-info btn-sm">Rename</a>
+                                                    </div>
+                                                </div>          
                                             </div>
                                         </td>
                                     </tr>
@@ -99,21 +111,15 @@
                             <input type="text" class="form-control" placeholder="Room name...">
                         </div>
                         <form role="form" ng-show="(Data.environment.name!='root-room')">
-                            <div class="row">
-                                <div class="col-md-8" >
-                                    <input type="file"   style="visibility:hidden;"onchange="$('#fileName').val($(this).val());" id="file">
-                                    <div class="input-group">   
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-danger" type="button" onclick="$('#file').click();">Add File</button>
-                                        </span>
-                                        <input type="text" class="form-control" value="No file selected"id="fileName">                                      </div>
-                                </div> 
-                                <div class="col-md-2" >
-                                    </br>
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-success">Save File</button>
-                                    </div>
-                                </div> 
+                                <input type="file" style="visibility:hidden;"onchange="$('#fileName').val($(this).val());" id="file">
+                                <div class="input-group">   
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-danger" type="button" onclick="$('#file').click();"><span class="glyphicon glyphicon-folder-open"></span> Browse File</button>
+                                    </span>
+                                    <input type="text" class="form-control" value="No file selected"id="fileName">                                          <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">Add File</button>
+                                    </span>
+                                 
                             </div> 
                         </form>
                     </div>
