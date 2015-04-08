@@ -86,15 +86,15 @@
                                             <div ng-if="GroupData.path!= ''">    
                                                 <div ng-switch on="GroupData.mime_type">
                                                     <div ng-switch-when="application/msword">
-                                                        <a href="{{WebUrl}}{{GroupData.path}}"  target="_blank" class="btn btn-success btn-sm" style="width:90px">Download</a>                                                         
+                                                        <a ng-href="{{WebUrl}}{{GroupData.path}}"  target="_blank" class="btn btn-success btn-sm" style="width:90px">Download</a>                                                         
                                                         <a class="btn btn-info btn-sm">Rename</a>
                                                     </div>
                                                     <div ng-switch-when="application/pdf">
-                                                         <a href="{{WebUrl}}{{GroupData.path}}"target="_blank" class="btn btn-success btn-sm" style="width:90px">Open</a> 
+                                                         <a ng-href="{{WebUrl}}{{GroupData.path}}"target="_blank" class="btn btn-success btn-sm" style="width:90px">Open</a> 
                                                         <a class="btn btn-info btn-sm">Rename</a>
                                                     </div>
                                                     <div ng-switch-default>
-                                                        <a href="#{{GroupData.path}}"class="btn btn-success btn-sm "    style="width:90px">Open</a>
+                                                        <a href="#/home{{GroupData.path}}"class="btn btn-success btn-sm "    style="width:90px">Open</a>
                                                         <a class="btn btn-info btn-sm">Rename</a>
                                                     </div>
                                                 </div>          

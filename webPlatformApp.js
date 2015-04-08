@@ -41,8 +41,8 @@ angular.module('webPlatformApp', ['ngRoute'])
                  .when("/error",{
                     templateUrl: 'views/error.html',
                     controller: 'errorCtrl'
-                })
-                 .otherwise({ redirectTo: '/error' });
+                }).otherwise({ redirectTo: '/error' });
+                 
          }])
     .controller('IndexCtrl', ['$scope','$location','$route',function ($scope,$route,$location) {
         $scope.logIn=function(){
@@ -71,7 +71,6 @@ angular.module('webPlatformApp', ['ngRoute'])
         $scope.Url=$scope.WebUrl+$scope.RestQuery+'home/'+$routeParams.paramiters;
     }
     $http.get($scope.Url).success(function(response) {
-        
         if(response.error!=null){
         $location.path('/error');
         $location.replace(); 
@@ -114,9 +113,7 @@ angular.module('webPlatformApp', ['ngRoute'])
         $location.path('/error');
         $location.replace(); 
     });	
-    $('#file').change(function(){
-        
-    });
+   
     })
     .controller('navControler', ['$scope', '$location',function ($scope,$location) {
         $scope.setClass = function(path) {    

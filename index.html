@@ -10,12 +10,19 @@
 </head>
 <body ng-app="webPlatformApp">
     <div class="row" ng-controller="navControler">
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" 
+         data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a class="navbar-brand" href="">Open sTeam Collaboration platform</a>
                 </div>
-                <div>
+                <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li ng-hide="isLogOut();" ng-class="setClass('/home')">
                             <a href="#/home"><span class="glyphicon glyphicon-folder-open"> Groups</span></a>
@@ -51,9 +58,7 @@
             </div>
         </nav>
     </div>
-    <div class="view-animate-container">
-        <div class="view-animate" ng-view></div>
-    </div>
+    <div ng-view></div>
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
     <script src="webPlatformApp.js"></script>
