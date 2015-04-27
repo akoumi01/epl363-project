@@ -18,11 +18,11 @@
                 <div class="modal-body">
                     <form role="form" name="SingInForm">
                         <div class="form-group">
-                            <h4><label for="userSignIn">Username</label></h4>
-                            <input type="email" class="form-control input-lg" id="userSignIn" size="8" placeholder="Email.." name="userSignIn" ng-model="userSignIn" required>
+                            <h4><label for="userSignIn">Nickname</label></h4>
+                            <input type="text" class="form-control input-lg" id="userSignIn" size="8" placeholder="Email.." name="userSignIn" ng-model="userSignIn" required>
                              <span style="color:red" ng-show="SingInForm.userSignIn.$dirty && SingInForm.userSignIn.$invalid">
-                                <span ng-show="SingInForm.userSignIn.$error.required">Email is required.</span>
-                                <span ng-show="SingInForm.userSignIn.$error.email">Invalid email address.</span>
+                                <span ng-show="SingInForm.userSignIn.$error.required">Nickname is required.</span>
+                                <span ng-show="SingInForm.userSignIn.$error.email">Invalid Nickname address.</span>
                             </span>       
                         </div>
                         <div class="form-group"> 
@@ -35,12 +35,13 @@
                         <span style="color:red" id="message">
                                 
                             </span>   
-                    </form>
                 </div>
                 <div class="modal-footer">
-                    <a ng-href="" ng-click="logIn();"class="btn btn-success btn-lg"  ng-disabled="(SingInForm.userSignIn.$dirty && SingInForm.userSignIn.$invalid) || (SingInForm.signInpwd.$dirty && SingInForm.signInpwd.$invalid)"> Sign In </a>
+                    <button type="submit" ng-href="" ng-click="logIn();"class="btn btn-success btn-lg"  ng-disabled="(SingInForm.userSignIn.$dirty && SingInForm.userSignIn.$invalid) || (SingInForm.signInpwd.$dirty && SingInForm.signInpwd.$invalid)"> Sign In </button>
                     <button type="button" class="btn  btn-danger btn-lg" data-dismiss="modal">Cancel</button>
-                </div>
+                                    </form>
+
+                    </div>
             </div>	
         </div>
     </div>

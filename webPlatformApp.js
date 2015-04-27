@@ -4,61 +4,86 @@ app.config(['$routeProvider', '$locationProvider',
              $routeProvider
 				.when('/', {
                     templateUrl: 'views/index.html',
-                    controller: 'IndexCtrl'
+                    controller: 'IndexCtrl',
+                 requireLogin: false
                 })
                  .when('/index', {
                     templateUrl: 'views/index.html',
-                    controller: 'IndexCtrl'
+                    controller: 'IndexCtrl',
+                 requireLogin: false
                 })
                  .when('/index.html', {
                     templateUrl: 'views/index.html',
-                    controller: 'IndexCtrl'
+                    controller: 'IndexCtrl',
+                 requireLogin: false
+                }).when('/notifications', {
+                    templateUrl: 'views/notifications.html',
+                    controller: 'notificationsCtrl',
+                 requireLogin: true
                 })
                  .when('/editProfile', {
                     templateUrl: 'views/editProfile.html',
-                    controller: 'editProfileCtrl'
+                    controller: 'editProfileCtrl',
+                 requireLogin: true
                 })
-                 .when('/notifications', {
-                    templateUrl: 'views/notifications.html',
-                    controller: 'notificationsCtrl'
-                })
+                 
                  .when('/messages', {
                     templateUrl: 'views/messages.html',
-                    controller: 'messagesCtrl'
+                    controller: 'messagesCtrl',
+                 requireLogin: true
                 })
                  .when('/adminPanel', {
                     templateUrl: 'views/adminPanel.html',
-                    controller: 'adminPanelCtrl'
+                    controller: 'adminPanelCtrl',
+                 requireLogin: true
                 })
                  .when("/home/:paramiters*",{
                     templateUrl: 'views/home.html',
-                    controller: 'homeCtrl'
+                    controller: 'homeCtrl',
+                 requireLogin: true
                 })
                  .when("/home",{
                     templateUrl: 'views/home.html',
-                    controller: 'homeCtrl'
+                    controller: 'homeCtrl',
+                 requireLogin: true
                 })
                  .when("/error",{
                     templateUrl: 'views/error.html',
-                    controller: 'errorCtrl'
+                    controller: 'errorCtrl',
+                 requireLogin: true
                 }).otherwise({ redirectTo: '/error' });
                  
          }]);
+app.run(['$rootScope', '$location', 'steam', function ($rootScope, $location,steam ) {
+    $rootScope.$on('$routeChangeStart', function (event,next,current) {
+
+        if (!steam.loginp()&& next.requireLogin) {
+            console.log('DENY');
+            event.preventDefault();
+            $location.path('/');
+        }else if(steam.loginp()&& !next.requireLogin){
+         event.preventDefault();
+            $location.path('/notifications');
+        }
+    });
+}]);
     app.controller('IndexCtrl', ['$scope','$location','$route','steam','$http',function ($scope,$route,$location,steam,$http) {
                     document.getElementById("message").innerHTML="";
 
         $scope.logIn=function(){
-             $scope.re=steam.login($scope.userSignIn,$scope.signInpwd);
-            
-            if(!steam.loginp()){
-           document.getElementById("message").innerHTML="Wrong Password or Email";
-            }else{
-                location.href = '#/notifications';
-            location.reload();
-            }
-           /* $('#signIn').modal('hide');
+      
+            $scope.re=steam.login($scope.userSignIn,$scope.signInpwd).then(function(response) {
+      if(!steam.loginp()){
+      document.getElementById("message").innerHTML="Wrong Password or Email";
+
+      }else{
+      $('#signIn').modal('hide');
             location.href = '#/notifications';
-            location.reload(); */        
+            location.reload();
+      }
+               
+
+   });
 
         }
         $scope.singUp=function(){
