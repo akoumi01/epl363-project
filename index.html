@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="webPlatformApp">
 <head>
     <title>sTeam Collaboration platform</title>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
-<body ng-app="webPlatformApp">
+<body  >
     <div class="row" ng-controller="navControler">
         <nav class="navbar navbar-inverse" role="navigation">
             <div class="container-fluid">
@@ -45,7 +45,7 @@
                             <a href="#/editProfile"><span class="glyphicon glyphicon-user" > Edit Profile</span></a>
                         </li>
                         <li ng-hide="isLogOut();" ng-class="setClass('/index')">
-                            <a href="#/index"><span class="glyphicon glyphicon-log-in"> Log out</span></a>
+                            <a href="#/index" ng-click="logOut();"><span class="glyphicon glyphicon-log-in"> Log out</span></a>
                         </li>
                         <li ng-show="isLogOut();">
                             <a href="" data-toggle="modal" data-target="#signUp"><span class="glyphicon glyphicon-user" ></span> Sign Up</a>
@@ -61,6 +61,10 @@
     <div ng-view></div>
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
+    <script src="js/localStorageModule.js"></script>
     <script src="webPlatformApp.js"></script>
+    <script src="servises.js"></script>
+
+
 </body>
 </html>

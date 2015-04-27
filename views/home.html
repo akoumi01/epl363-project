@@ -110,14 +110,14 @@
                             </span>
                             <input type="text" class="form-control" placeholder="Room name...">
                         </div>
-                        <form role="form" ng-show="(Data.environment.name!='root-room')">
+                        <form action="http://localhost:8080/collaboration-platform/rest/files/upload" method="post" enctype="multipart/form-data" role="form" ng-show="(Data.environment.name!='root-room')">
                                 <input type="file" style="visibility:hidden;"onchange="$('#fileName').val($(this).val());" id="file">
                                 <div class="input-group">   
                                     <span class="input-group-btn">
                                         <button class="btn btn-danger" type="button" onclick="$('#file').click();"><span class="glyphicon glyphicon-folder-open"></span> Browse File</button>
                                     </span>
                                     <input type="text" class="form-control" value="No file selected"id="fileName">                                          <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button">Add File</button>
+                                        <button type="submit" class="btn btn-success" type="button">Add File</button>
                                     </span>
                                  
                             </div> 

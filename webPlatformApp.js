@@ -1,5 +1,5 @@
-angular.module('webPlatformApp', ['ngRoute'])
-.config(['$routeProvider', '$locationProvider',
+var app=angular.module('webPlatformApp', ['ngRoute','LocalStorageModule']);
+app.config(['$routeProvider', '$locationProvider',
          function ($routeProvider,$locationProvider) {
              $routeProvider
 				.when('/', {
@@ -43,26 +43,48 @@ angular.module('webPlatformApp', ['ngRoute'])
                     controller: 'errorCtrl'
                 }).otherwise({ redirectTo: '/error' });
                  
-         }])
-    .controller('IndexCtrl', ['$scope','$location','$route',function ($scope,$route,$location) {
+         }]);
+    app.controller('IndexCtrl', ['$scope','$location','$route','steam','$http',function ($scope,$route,$location,steam,$http) {
+                    document.getElementById("message").innerHTML="";
+
         $scope.logIn=function(){
-            $('#signIn').modal('hide');
+             $scope.re=steam.login($scope.userSignIn,$scope.signInpwd);
+            
+            if(!steam.loginp()){
+           document.getElementById("message").innerHTML="Wrong Password or Email";
+            }else{
+                location.href = '#/notifications';
+            location.reload();
+            }
+           /* $('#signIn').modal('hide');
             location.href = '#/notifications';
-            location.reload();         
+            location.reload(); */        
 
         }
+        $scope.singUp=function(){
+ $http.post("http://dev-back1.techgrind.asia/scripts/rest.pike?request=register",JSON.stringify({
+                 "email":$scope.emailSignUp,
+                "password":$scope.signUppwd,
+                "password2":$scope.signUpRePass,
+                "group":$scope.group   
+        })).success(function(response) {
+    $scope.myres=response;
+    })
+}
+        
+        
+    }]);
+    app.controller('errorCtrl', ['$scope', function ($scope) {	
     }])
-    .controller('errorCtrl', ['$scope', function ($scope) {	
+    app.controller('editProfileCtrl', ['$scope', function ($scope) {
     }])
-    .controller('editProfileCtrl', ['$scope', function ($scope) {
+    app.controller('notificationsCtrl', ['$scope', function ($scope) {
     }])
-    .controller('notificationsCtrl', ['$scope', function ($scope) {
+    app.controller('messagesCtrl', ['$scope', function ($scope) {	
     }])
-    .controller('messagesCtrl', ['$scope', function ($scope) {	
+    app.controller('adminPanelCtrl', ['$scope', function ($scope) {	
     }])
-    .controller('adminPanelCtrl', ['$scope', function ($scope) {	
-    }])
-    .controller('homeCtrl', function($scope,$http,$routeParams, $location) {
+    app.controller('homeCtrl', function($scope,$http,$routeParams, $location,steam) {
     $scope.WebUrl = "http://dev-back1.techgrind.asia";
     $scope.RestQuery = "/scripts/rest.pike?request=/";
     if($routeParams.paramiters==null){
@@ -115,7 +137,8 @@ angular.module('webPlatformApp', ['ngRoute'])
     });	
    
     })
-    .controller('navControler', ['$scope', '$location',function ($scope,$location) {
+    app.controller('navControler', ['$scope', '$location','steam',function ($scope,$location,steam) {
+        
         $scope.setClass = function(path) {    
             if ($location.path().substr(0, path.length) == path) {
                 return "active"
@@ -123,10 +146,14 @@ angular.module('webPlatformApp', ['ngRoute'])
                 return ""
             }
         }
+        $scope.logOut=function(){
+         steam.logout();
+
+        }
         $scope.isLogOut=function(){
-            var url=$location.path().substr(0, $location.path().length);
-			if ( url== "/index"||url== "/index.html"||url== "/") {
-                return true; 
+            if(steam.loginp()==null||steam.loginp()==false){
+            return true;
             }else return false;
+            
         }    
     }]);
