@@ -19,7 +19,7 @@
                     <form role="form" name="SingInForm">
                         <div class="form-group">
                             <h4><label for="userSignIn">Nickname</label></h4>
-                            <input type="text" class="form-control input-lg" id="userSignIn" size="8" placeholder="Email.." name="userSignIn" ng-model="userSignIn" required>
+                            <input type="text" class="form-control input-lg" id="userSignIn" size="8" placeholder="Nickname...." name="userSignIn" ng-model="userSignIn" required>
                              <span style="color:red" ng-show="SingInForm.userSignIn.$dirty && SingInForm.userSignIn.$invalid">
                                 <span ng-show="SingInForm.userSignIn.$error.required">Nickname is required.</span>
                                 <span ng-show="SingInForm.userSignIn.$error.email">Invalid Nickname address.</span>

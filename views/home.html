@@ -1,6 +1,98 @@
 <div class="container">
+    <div class="modal fade" id="uploadFileModal">
+        <div class="modal-dialog " >
+            <div class="modal-content panel-primary ">
+                <div class="modal-header panel-heading" >
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title">Add New File</h3>
+                </div>
+                <div class="modal-body">   
+                    <form id="file-form"  action="" method="post" enctype="multipart/form-data" style="visibility: hidden;">
+                        <input id="file" type="file" name="file" size="50" onchange="$('#fileName').val($(this).val());"/>
+                    </form>
+                    <form role="form">								
+                        <div class="input-group">   
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" onclick="$('#file').click();">                                         <span class="glyphicon glyphicon-folder-open"></span>       Browse File
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" value="No file selected"id="fileName">                                                   <span class="input-group-btn"></span>
+                        </div> 
+                        <div class="modal-footer">
+                            <button id="upload-button" type="submit" class="btn  btn-success btn-lg" ng-click="createNewFile()">Add File</button>
+                            <button type="button" class="btn  btn-danger btn-lg" data-dismiss="modal">Cancel</button>                                   </div>
+                    </form>                
+                </div>	
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createRoomModal">
+        <div class="modal-dialog " >
+            <div class="modal-content panel-primary ">
+                <div class="modal-header panel-heading" >
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title">Create New Room</h3>
+                </div>
+                <div class="modal-body">
+                    <form role="form" name="addRoomForm">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button ng-disabled="addRoomForm.roomName.$error.required" id="createRoombtn" class="btn btn-info" type="button" ng-click="createRoom();">Add Room</button>
+                            </span>
+                            <input type="text" class="form-control" ng-model="roomName" name="roomName" id="roomName" placeholder="Room name..."   required> 
+                        </div>				
+                        <div class="modal-footer">
+                            <button type="button" class="btn  btn-danger btn-lg" data-dismiss="modal">Cancel</button>                                   </div>
+                    </form>        
+                </div>	
+            </div>
+        </div>
+    </div>      
+    <div class="modal fade" id="createNewTextDocumentModal">
+        <div class="modal-dialog " >
+            <div class="modal-content panel-primary ">
+                <div class="modal-header panel-heading" >
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title">Create New Text Documet</h3>
+                </div>
+                <div class="modal-body">
+                    <form role="form" name="newTextDocumentForm">
+                        <div class="form-group">
+                            <h4><label for="content">Document Name:</label></h4>
+                            <input type="text" class="form-control input-lg" ng-model="newtxtFileName" name="newtxtFileName" id="newtxtFileName" placeholder="Enter Document name..."   required> 
+                        </div>	
+                        <div class="form-group">
+                            <h4><label for="content">Document Content:</label></h4>
+                            <textarea ng-model="newtxtContent" class="form-control input-lg" rows="5" id="newtxtContent" name="newtxtContent" placeholder="Enter Document Content..." required></textarea>
+                        </div>                        
+                        <div class="modal-footer">
+                            <button ng-disabled="(newTextDocumentForm.newtxtFileName.$error.required)||(newTextDocumentForm.newtxtContent.$error.required)" type="submit" class="btn btn-success btn-lg" ng-click="createNewTextFile()">Save</button>
+                            <button type="button" class="btn  btn-danger btn-lg" data-dismiss="modal">Cancel</button>                                   </div>
+                    </form>        
+                </div>	
+            </div>
+        </div>
+    </div>     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="row">
-        <div class="col-sm-4" >
+        <div class="col-sm-3" >
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title"><b>Navigation pane</b></h3>
@@ -12,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-8" >
+        <div class="col-sm-9" >
             <div ng-if="Data.object.class == 'Document'">
                 <div ng-if="Data.object.mime_type == 'image/png'">
                     <div class="panel panel-success">
@@ -31,24 +123,13 @@
                         </div>        
                         <div class="panel-body">
                             <form role="form">
-                                <div class="form-group">
-                                    <h4><label for="name">Documet Name:</label></h4>
-                                    <input type="text" class="form-control input-lg" id="name" value="{{Data.object.name}}" required>
-                                </div>
-                                <div class="form-group">
-                                    <h4><label for="title">Document Title:</label></h4>
-                                    <input type="text" class="form-control input-lg" id="title" value="{{Data.object.title}}" required> 
-                                </div>
-                                <div class="form-group">
-                                    <h4><label for="description">Document description:</label></h4>
-                                    <input type="text" class="form-control input-lg" id="description" value="{{Data.object.description}}" required>
-                                </div>
+                                    <h3><label for="title">Document Title:{{Data.object.title}}</label></h3>
                                 <div class="form-group">
                                     <h4><label for="content">Document Content:</label></h4>
                                     <textarea class="form-control input-lg" rows="5" id="content">{{Data.object.content}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success btn-lg">Save</button>
+                                    <button type="submit" class="btn btn-success btn-lg" ng-click="saveText();">Save</button>
                                 </div>
                             </form>
                         </div>     
@@ -58,7 +139,11 @@
             <div ng-if="Data.object.class == 'Room'">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>{{Data.object.name}}</b> </h3>
+                        <h3 class="panel-title"><b>{{Data.object.name}}</b> </h3><br>
+                         <a ng-hide="isHome();"data-toggle="modal" data-target="#uploadFileModal"class="btn btn-success btn-md">Add new File</a>
+                        <a ng-hide="isHome();" class="btn btn-success btn-md" data-toggle="modal" data-target="#createNewTextDocumentModal">Create new text file</a>  
+
+                        <a class="btn btn-success btn-md" data-toggle="modal" data-target="#createRoomModal">Create new Room</a>  
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -103,25 +188,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div> 
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button class="btn btn-info" type="button">Add Room</button>
-                            </span>
-                            <input type="text" class="form-control" placeholder="Room name...">
-                        </div>
-                        <form action="http://localhost:8080/collaboration-platform/rest/files/upload" method="post" enctype="multipart/form-data" role="form" ng-show="(Data.environment.name!='root-room')">
-                                <input type="file" style="visibility:hidden;"onchange="$('#fileName').val($(this).val());" id="file">
-                                <div class="input-group">   
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button" onclick="$('#file').click();"><span class="glyphicon glyphicon-folder-open"></span> Browse File</button>
-                                    </span>
-                                    <input type="text" class="form-control" value="No file selected"id="fileName">                                          <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-success" type="button">Add File</button>
-                                    </span>
-                                 
-                            </div> 
-                        </form>
+                        </div>                                 
                     </div>
                 </div>
             </div>         

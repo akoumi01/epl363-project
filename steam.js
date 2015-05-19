@@ -1,3 +1,5 @@
+var app=angular.module('steam', ['ngRoute','LocalStorageModule']);
+
 app.factory('steam', function($http, localStorageService) {
   var baseurl, handle_request, headers, loginp, restapi;
   baseurl = 'http://dev-back1.techgrind.asia/';
