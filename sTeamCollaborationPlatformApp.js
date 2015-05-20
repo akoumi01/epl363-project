@@ -1,153 +1,168 @@
-var app=angular.module('webPlatformApp', ['ngRoute','steam','LocalStorageModule']);
+var app=angular.module('sTeamCollaborationPlatformApp', ['ngRoute','steam','LocalStorageModule']);
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider,$locationProvider) {
-$routeProvider.when('/', {
+$routeProvider.when('/', { 
     templateUrl: 'views/index.html',
-    controller: 'IndexCtrl',
+    controller: 'IndexController ',
     requireLogin: false
     })
     .when('/index', {
     templateUrl: 'views/index.html',
-    controller: 'IndexCtrl',
+    controller: 'IndexController',
     requireLogin: false
     })
     .when('/index.html', {
     templateUrl: 'views/index.html',
-    controller: 'IndexCtrl',
+    controller: 'IndexController',
     requireLogin: false
     }).when('/notifications', {
     templateUrl: 'views/notifications.html',
-    controller: 'notificationsCtrl',
+    controller: 'notificationsController',
     requireLogin: true
     })
     .when('/editProfile', {
     templateUrl: 'views/editProfile.html',
-    controller: 'editProfileCtrl',
+    controller: 'editProfileController',
     requireLogin: true
     })
     .when('/messages', {
     templateUrl: 'views/messages.html',
-    controller: 'messagesCtrl',
+    controller: 'messagesController',
     requireLogin: true
     })
     .when('/adminPanel', {
     templateUrl: 'views/adminPanel.html',
-    controller: 'adminPanelCtrl',
+    controller: 'adminPanelController',
     requireLogin: true
     })
     .when("/home/:paramiters*",{
     templateUrl: 'views/home.html',
-    controller: 'homeCtrl',
+    controller: 'homeController',
     requireLogin: true
     })
     .when("/home/",{
     templateUrl: 'views/home.html',
-    controller: 'homeCtrl',
+    controller: 'homeController',
     requireLogin: true
     })
     .when("/home",{
     templateUrl: 'views/home.html',
-    controller: 'homeCtrl',
+    controller: 'homeController',
     requireLogin: true
     })
     .when("/error",{
     templateUrl: 'views/error.html',
-    controller: 'errorCtrl',
+    controller: 'errorController',
     requireLogin: true
     }).otherwise({ redirectTo: '/error' });
 }]);
 
 app.run(['$rootScope', '$location', 'steam', function ($rootScope, $location,steam ) {
     $rootScope.$on('$routeChangeStart', function (event,next,current) {
-
         if (!steam.loginp()&& next.requireLogin) {
-            console.log('DENY');
             event.preventDefault();
             $location.path('/');
         }else if(steam.loginp()&& !next.requireLogin){
          event.preventDefault();
-            $location.path('/notifications');
+        $location.path('/notifications');
         }
     });
 }]);
-app.controller('IndexCtrl', ['$scope','$location','$route','steam','$http',function ($scope,$route,$location,steam,$http) {
-    document.getElementById("message").innerHTML="";
+app.controller('IndexController', ['$scope','steam','$location',"$window",function ($scope,steam,$location,$window) {
     $scope.logIn=function(){
-
-     steam.login($scope.userSignIn,$scope.signInpwd).then(function(response) {
-            if(!steam.loginp()){
-                document.getElementById("message").innerHTML="Wrong Password or Email";
-            }else{
+        var $btn = $("#btnSignIn");
+        $btn.button('loading');
+        steam.login($scope.userSignIn,$scope.signInpwd).then(function(response) {
+                $btn.button('reset');
                 $('#signIn').modal('hide');
-                location.href = '#/notifications';
-                location.reload();
-            }
-        });
-    }
-  
+                $location.path('/notifications');
+                $window.location.reload();
+        }).catch(function(e){
+                $btn.button('reset');
+                $('#signIn').modal('hide');
+                alert("Wrong username or password");
+     })
+    }  
 }]);
-app.controller('errorCtrl', ['$scope', function ($scope) {	
+app.controller('errorController', ['$scope', function ($scope) {	
 }]);
-app.controller('editProfileCtrl', ['$scope', function ($scope) {
+app.controller('editProfileController', ['$scope', function ($scope) {
 }]);
-app.controller('notificationsCtrl', ['$scope', function ($scope) {
+app.controller('notificationsController', ['$scope', function ($scope) {
 }]);
-app.controller('messagesCtrl', ['$scope', function ($scope) {	
+app.controller('messagesController', ['$scope', function ($scope) {	
 }]);
-app.controller('adminPanelCtrl', ['$scope', function ($scope) {	
+app.controller('adminPanelController', ['$scope', function ($scope) {	
     
 }]);
-app.controller('homeCtrl', ['$scope','$http','$routeParams','$location','$http','steam','localStorageService',function ($scope,$http,$routeParams,$location,$http,steam,localStorageService) {
+app.controller('homeController', ['$scope','$routeParams','$location','steam','localStorageService',"$window",function ($scope,$routeParams,$location,steam,localStorageService,$window) {
     $scope.myUrl='http://dev-back1.techgrind.asia/scripts/rest.pike?request=/home/'+$routeParams.paramiters;
     var userDetails=steam.user();
-    
-    $scope.saveText=function() {
-        var text=document.getElementById('content').value;
-        var data = JSON.stringify( { content: text});
+    $('#loadingBarModal').modal('show'); 
+
+    $scope.saveText=function() {   
+        var $btn = $("#btnSavaTextDocument");
+        $btn.button('loading');
+        var text=document.getElementById('saveTextContent').value;
+        var data = JSON.stringify( { content:text});
         var request=/home/+$routeParams.paramiters;    
         steam.post(request, data).then(function(response) {
-        console.log(response);
-        alert("The document was saved successfully.");
-        });
-
+            $btn.button('reset')
+            alert("The document was saved successfully.");
+        }).catch(function(e){
+            $btn.button('reset');
+            alert("Error while saving the file");
+     });
     }   
 
     $scope.createNewTextFile=function(){
+        var $btn = $("#btnSavaNewTextDocument");
+        $btn.button('loading');
       var data = JSON.stringify({ content: $scope.newtxtContent, type: "Document" });
       var request="/home/"+$routeParams.paramiters+"/"+$scope.newtxtFileName;   
       steam.put(request, data).then(function(response) {
+          $btn.button('reset');
           $('#createNewTextDocumentModal').modal('hide'); 
-          console.log(response);
-       // location.reload();
-      })
+          alert("The file was successfully created.");
+          $window.location.reload();
+      }).catch(function(e){
+        $btn.button('reset');
+        alert("Error while creating the file");
+     });
   }
     
     
-    
+
     $scope.createRoom=function(){
+        var $btn = $("#btnCreateRoom");
+        $btn.button('loading');
         var data = JSON.stringify({ type: "Room" });
         var request="/home/"+$routeParams.paramiters+"/"+$scope.roomName;
-        steam.put(request,data).then(function(response) { 
-        $('#createRoomModal').modal('hide');
-        // location.reload();
-        console.log(response);
-      });
+        steam.put(request,data).then(function(response) {
+            $btn.button('reset');
+            $('#createRoomModal').modal('hide');
+            alert("The room was successfully created.");
+            $window.location.reload();
+      }).catch(function(e){
+            $btn.button('reset');
+            alert("Error while creating the room");
+     });
   }
     
-    
+   
     
   $scope.WebUrl = "http://dev-back1.techgrind.asia";
+
     if($routeParams.paramiters==null){
+    
+
         $scope.RestQuery='/home/';
     }else{
         $scope.RestQuery='/home/'+$routeParams.paramiters;
     }
     steam.get($scope.RestQuery).then(function(response) {
-                            console.log(response);
 
-        
         if(response.error!=null){
             $location.path('/error');
-            $location.replace(); 
         }else{
             $scope.Data = response;
             if (angular.isArray(response.object)) {
@@ -162,6 +177,7 @@ app.controller('homeCtrl', ['$scope','$http','$routeParams','$location','$http',
             } else {
                 $scope.inventory = [response.inventory];
             }  
+         
             //CREATE PATH FROM PARAMITERS 
             var path=$routeParams.paramiters;
             if(path!=null){
@@ -183,13 +199,19 @@ app.controller('homeCtrl', ['$scope','$http','$routeParams','$location','$http',
                 $scope.paths=[{name:'home',url:'/home'}];
             }
         }
-        
-    });	 
+        $('#loadingBarModal').modal('hide'); 
+
+    }).catch(function(e){
+        $('#loadingBarModal').modal('hide');
+        $location.path('/error');
+        $window.location.reload();
+     });	
+    
       $scope.isHome=function(){
         return ($routeParams.paramiters==undefined);
     }
 }]);
-app.controller('navControler', ['$scope', '$location','steam',function ($scope,$location,steam) {
+app.controller('navController', ['$scope', '$location','steam',function ($scope,$location,steam) {
         
         $scope.setClass = function(path) {    
             if ($location.path().substr(0, path.length) == path) {

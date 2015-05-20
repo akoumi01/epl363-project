@@ -19,29 +19,18 @@
                     <form role="form" name="SingInForm">
                         <div class="form-group">
                             <h4><label for="userSignIn">Nickname</label></h4>
-                            <input type="text" class="form-control input-lg" id="userSignIn" size="8" placeholder="Nickname...." name="userSignIn" ng-model="userSignIn" required>
-                             <span style="color:red" ng-show="SingInForm.userSignIn.$dirty && SingInForm.userSignIn.$invalid">
-                                <span ng-show="SingInForm.userSignIn.$error.required">Nickname is required.</span>
-                                <span ng-show="SingInForm.userSignIn.$error.email">Invalid Nickname address.</span>
-                            </span>       
+                            <input type="text" class="form-control input-lg" id="userSignIn" size="8" placeholder="Nickname...." name="userSignIn" ng-model="userSignIn" required>       
                         </div>
                         <div class="form-group"> 
                             <h4><label for="signInpwd">Password:</label></h4>
                             <input type="password" class="form-control input-lg" id="signInpwd" size="8" placeholder="Password" name="signInpwd" ng-model="signInpwd" required>  
-                            <span style="color:red" ng-show="SingInForm.signInpwd.$dirty && SingInForm.signInpwd.$invalid">
-                                <span ng-show="SingInForm.signInpwd.$error.required">Password is required.</span>
-                            </span>
-                        </div>
-                        <span style="color:red" id="message">
-                                
-                            </span>   
+                        </div> 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" ng-href="" ng-click="logIn();"class="btn btn-success btn-lg"  ng-disabled="(SingInForm.userSignIn.$dirty && SingInForm.userSignIn.$invalid) || (SingInForm.signInpwd.$dirty && SingInForm.signInpwd.$invalid)"> Sign In </button>
+                    <button type="submit" ng-href="" ng-click="logIn();" data-loading-text="Sing In......"class="btn btn-success btn-lg"  ng-disabled="(SingInForm.userSignIn.$error.required) || (SingInForm.signInpwd.$error.required)" id="btnSignIn" autocomplete="off"> Sign In </button>
                     <button type="button" class="btn  btn-danger btn-lg" data-dismiss="modal">Cancel</button>
-                                    </form>
-
-                    </div>
+                    </form>
+                </div>
             </div>	
         </div>
     </div>
