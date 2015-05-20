@@ -1,61 +1,60 @@
 var app=angular.module('sTeamCollaborationPlatformApp', ['ngRoute','steam','LocalStorageModule']);
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider,$locationProvider) {
-$routeProvider.when('/', { 
+$routeProvider.when('/', {
     templateUrl: 'views/index.html',
-    controller: 'IndexController ',
+    controller: 'IndexCtrl',
     requireLogin: false
     })
     .when('/index', {
     templateUrl: 'views/index.html',
-    controller: 'IndexController',
+    controller: 'IndexCtrl',
     requireLogin: false
     })
     .when('/index.html', {
     templateUrl: 'views/index.html',
-    controller: 'IndexController',
+    controller: 'IndexCtrl',
     requireLogin: false
     }).when('/notifications', {
     templateUrl: 'views/notifications.html',
-    controller: 'notificationsController',
+    controller: 'notificationsCtrl',
     requireLogin: true
     })
     .when('/editProfile', {
     templateUrl: 'views/editProfile.html',
-    controller: 'editProfileController',
+    controller: 'editProfileCtrl',
     requireLogin: true
     })
     .when('/messages', {
     templateUrl: 'views/messages.html',
-    controller: 'messagesController',
+    controller: 'messagesCtrl',
     requireLogin: true
     })
     .when('/adminPanel', {
     templateUrl: 'views/adminPanel.html',
-    controller: 'adminPanelController',
+    controller: 'adminPanelCtrl',
     requireLogin: true
     })
     .when("/home/:paramiters*",{
     templateUrl: 'views/home.html',
-    controller: 'homeController',
+    controller: 'homeCtrl',
     requireLogin: true
     })
     .when("/home/",{
     templateUrl: 'views/home.html',
-    controller: 'homeController',
+    controller: 'homeCtrl',
     requireLogin: true
     })
     .when("/home",{
     templateUrl: 'views/home.html',
-    controller: 'homeController',
+    controller: 'homeCtrl',
     requireLogin: true
     })
     .when("/error",{
     templateUrl: 'views/error.html',
-    controller: 'errorController',
+    controller: 'errorCtrl',
     requireLogin: true
     }).otherwise({ redirectTo: '/error' });
 }]);
-
 app.run(['$rootScope', '$location', 'steam', function ($rootScope, $location,steam ) {
     $rootScope.$on('$routeChangeStart', function (event,next,current) {
         if (!steam.loginp()&& next.requireLogin) {
@@ -67,7 +66,7 @@ app.run(['$rootScope', '$location', 'steam', function ($rootScope, $location,ste
         }
     });
 }]);
-app.controller('IndexController', ['$scope','steam','$location',"$window",function ($scope,steam,$location,$window) {
+app.controller('IndexCtrl', ['$scope','steam','$location',"$window",function ($scope,steam,$location,$window) {
     $scope.logIn=function(){
         var $btn = $("#btnSignIn");
         $btn.button('loading');
@@ -83,18 +82,18 @@ app.controller('IndexController', ['$scope','steam','$location',"$window",functi
      })
     }  
 }]);
-app.controller('errorController', ['$scope', function ($scope) {	
+app.controller('errorCtrl', ['$scope', function ($scope) {	
 }]);
-app.controller('editProfileController', ['$scope', function ($scope) {
+app.controller('editProfileCtrl', ['$scope', function ($scope) {
 }]);
-app.controller('notificationsController', ['$scope', function ($scope) {
+app.controller('notificationsCtrl', ['$scope', function ($scope) {
 }]);
-app.controller('messagesController', ['$scope', function ($scope) {	
+app.controller('messagesCtrl', ['$scope', function ($scope) {	
 }]);
-app.controller('adminPanelController', ['$scope', function ($scope) {	
+app.controller('adminPanelCtrl', ['$scope', function ($scope) {	
     
 }]);
-app.controller('homeController', ['$scope','$routeParams','$location','steam','localStorageService',"$window",function ($scope,$routeParams,$location,steam,localStorageService,$window) {
+app.controller('homeCtrl', ['$scope','$routeParams','$location','steam','localStorageService',"$window",function ($scope,$routeParams,$location,steam,localStorageService,$window) {
     $scope.myUrl='http://dev-back1.techgrind.asia/scripts/rest.pike?request=/home/'+$routeParams.paramiters;
     var userDetails=steam.user();
     $('#loadingBarModal').modal('show'); 
