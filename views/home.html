@@ -125,7 +125,7 @@
                             <form role="form">
                                     <h3><label>Document Title:{{Data.object.title}}</label></h3>
                                 <div class="form-group">
-                                    <textarea id="saveTextContent" class="form-control input-lg" rows="5" id="content">{{Data.object.content}}</textarea>
+                                    <textarea id="saveTextContent" class="form-control input-lg" rows="5">{{Data.object.content}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <button data-loading-text="Saving...." type="submit" class="btn btn-success btn-lg" ng-click="saveText();" id="btnSavaTextDocument" autocomplete="off">Save</button>
@@ -140,9 +140,9 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"><b>{{Data.object.name}}</b> </h3><br>
                          <a ng-hide="isHome();"data-toggle="modal" data-target="#uploadFileModal"class="btn btn-success btn-md">Add new File</a>
-                        <a ng-hide="isHome();" class="btn btn-success btn-md" data-toggle="modal" data-target="#createNewTextDocumentModal">Create new text file</a>  
+                        <a ng-hide="isHome();" class="btn btn-success btn-md" data-toggle="modal" data-target="#createNewTextDocumentModal" id="btncreateNewTextDocumentModal" >Create new text file</a>  
 
-                        <a class="btn btn-success btn-md" data-toggle="modal" data-target="#createRoomModal">Create new Room</a>  
+                        <a class="btn btn-success btn-md" data-toggle="modal" data-target="#createRoomModal" id="btncreateRoomModal">Create new Room</a>  
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -164,21 +164,21 @@
                                         <td>{{GroupData.description}}</td>
                                         <td>
                                             <div ng-if="GroupData.path== ''">    
-                                                <a href=""  class="btn btn-success btn-sm" style="width:90px">Open</a>
+                                                <a id="open{{GroupData.oid}}" href=""  class="btn btn-success btn-sm" style="width:90px">Open</a>
                                                 <a class="btn btn-info btn-sm">Rename</a>
                                             </div>
                                             <div ng-if="GroupData.path!= ''">    
                                                 <div ng-switch on="GroupData.mime_type">
                                                     <div ng-switch-when="application/msword">
-                                                        <a ng-href="{{WebUrl}}{{GroupData.path}}"  target="_blank" class="btn btn-success btn-sm" style="width:90px">Download</a>                                                         
+                                                        <a id="open{{GroupData.oid}}" ng-href="{{WebUrl}}{{GroupData.path}}"  target="_blank" class="btn btn-success btn-sm" style="width:90px">Download</a>                                                         
                                                         <a class="btn btn-info btn-sm">Rename</a>
                                                     </div>
                                                     <div ng-switch-when="application/pdf">
-                                                         <a ng-href="{{WebUrl}}{{GroupData.path}}"target="_blank" class="btn btn-success btn-sm" style="width:90px">Open</a> 
+                                                         <a id="open{{GroupData.oid}}" ng-href="{{WebUrl}}{{GroupData.path}}"target="_blank" class="btn btn-success btn-sm" style="width:90px">Open</a> 
                                                         <a class="btn btn-info btn-sm">Rename</a>
                                                     </div>
                                                     <div ng-switch-default>
-                                                        <a href="#/home{{GroupData.path}}"class="btn btn-success btn-sm "    style="width:90px">Open</a>
+                                                        <a id="open{{GroupData.oid}}" href="#/home{{GroupData.path}}"class="btn btn-success btn-sm "    style="width:90px">Open</a>
                                                         <a class="btn btn-info btn-sm">Rename</a>
                                                     </div>
                                                 </div>          

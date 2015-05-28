@@ -24,34 +24,34 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
-                        <li ng-hide="isLogOut();" ng-class="setClass('/home')">
-                            <a href="#/home"><span class="glyphicon glyphicon-folder-open"> Groups</span></a>
+                        <li  ng-hide="isLogOut();" ng-class="setClass('/home')">
+                            <a id="roomPage" href="#/home"><span class="glyphicon glyphicon-folder-open"> Room</span></a>
                         </li>
-                        <li ng-show="isLogOut();" class="active">
-                            <a href="">Home</a>
+                        <li  ng-show="isLogOut();" class="active">
+                            <a id="homePage" href="">Home</a>
                         </li>
-                        <li ng-hide="isLogOut();" ng-class="setClass('/notifications')">
-                            <a href="#/notifications"><span class="glyphicon glyphicon-home" > Home</span></a>
+                        <li  ng-hide="isLogOut();" ng-class="setClass('/notifications')">
+                            <a id="notificationsPage" href="#/notifications"><span class="glyphicon glyphicon-home" > Home</span></a>
                         </li>
                         <li ng-hide="isLogOut();" ng-class="setClass('/messages')">
-                            <a href="#/messages"><span class="glyphicon glyphicon-envelope" > Messaging</span></a>
+                            <a id="messagesPage" href="#/messages"><span class="glyphicon glyphicon-envelope" > Messaging</span></a>
                         </li>
-                        <li ng-hide="isLogOut();" ng-class="setClass('/adminPanel')">
-                            <a href="#/adminPanel"><span class="glyphicon glyphicon-list-alt" > Admin Panel</span></a>
+                        <li   ng-hide="isLogOut();" ng-class="setClass('/adminPanel')">
+                            <a id="adminPanelPage" href="#/adminPanel"><span class="glyphicon glyphicon-list-alt" > Admin Panel</span></a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li ng-hide="isLogOut();" ng-class="setClass('/editProfile')">
-                            <a href="#/editProfile"><span class="glyphicon glyphicon-user" > Edit Profile</span></a>
+                        <li  ng-hide="isLogOut();" ng-class="setClass('/editProfile')">
+                            <a id="editProfilePage" href="#/editProfile"><span class="glyphicon glyphicon-user" > Edit Profile</span></a>
                         </li>
-                        <li ng-hide="isLogOut();" ng-class="setClass('/index')">
+                        <li id="navLogOut"  ng-hide="isLogOut();" ng-class="setClass('/index')">
                             <a href="#/index" ng-click="logOut();"><span class="glyphicon glyphicon-log-in"> Log out</span></a>
                         </li>
-                        <li ng-show="isLogOut();">
-                            <a href="" data-toggle="modal" data-target="#signUp"><span class="glyphicon glyphicon-user" ></span> Sign Up</a>
+                        <li  ng-show="isLogOut();">
+                            <a id="signUpModalLink"href="" data-toggle="modal" data-target="#signUp"><span class="glyphicon glyphicon-user" ></span> Sign Up</a>
                         </li>
                         <li ng-show="isLogOut();">
-                            <a href=""data-toggle="modal" data-target="#signIn"><span class="glyphicon glyphicon-log-in" ></span> Log in</a>
+                            <a id="signInModalLink"href=""data-toggle="modal" data-target="#signIn"><span class="glyphicon glyphicon-log-in" ></span> Log in</a>
                         </li>
                     </ul>
                 </div>
